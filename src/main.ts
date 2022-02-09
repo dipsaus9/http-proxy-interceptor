@@ -1,7 +1,7 @@
 import { baseService } from './services/baseService';
 
 (async () => {
-  const user = await baseService.getSession();
+  const users = await baseService.getUsers();
 
-  console.log(user);
+  console.log(users);
 })();

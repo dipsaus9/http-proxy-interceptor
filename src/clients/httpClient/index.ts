@@ -1,41 +1,29 @@
 import type { FetchResponse } from './FetchResponse';
 
-export function createHttpClient(baseURL: string, baseConfig?: Partial<Omit<RequestInit, 'body'>>) {
+export function createHttpClient(baseURL: string, baseConfig?: Partial<Omit<RequestInit, 'body'>>): HttpClient {
   return {
-    async get<T>(
-      endPoint: string,
-      config?: HttpConfig,
-    ): Promise<FetchResponse<T>> {
+    get(endPoint, config?) {
       return fetch(`${baseURL}${endPoint}`, {
         ...baseConfig,
         ...config,
         method: 'GET',
       });
     },
-    async post<T>(
-      endPoint: string,
-      config?: HttpConfig,
-    ): Promise<FetchResponse<T>> {
+    post(endPoint, config) {
       return fetch(`${baseURL}${endPoint}`, {
         ...baseConfig,
         ...config,
         method: 'POST',
       });
     },
-    async put<T>(
-      endPoint: string,
-      config?: HttpConfig,
-    ): Promise<FetchResponse<T>> {
+    put(endPoint, config) {
       return fetch(`${baseURL}${endPoint}`, {
         ...baseConfig,
         ...config,
         method: 'PUT',
       });
     },
-    async delete<T>(
-      endPoint: string,
-      config?: HttpConfig,
-    ): Promise<FetchResponse<T>> {
+    delete(endPoint, config) {
       return fetch(`${baseURL}${endPoint}`, {
         ...baseConfig,
         ...config,
@@ -47,4 +35,12 @@ export function createHttpClient(baseURL: string, baseConfig?: Partial<Omit<Requ
 
 export type HttpConfig = Partial<Omit<RequestInit, 'method'>>;
 
-export type HttpClient = ReturnType<typeof createHttpClient>;
+
+export type HttpCall = <T>(endPoint: string, config?: HttpConfig) => Promise<FetchResponse<T>>;
+
+export type HttpClient = {
+  get: HttpCall
+  post: HttpCall
+  put: HttpCall
+  delete: HttpCall
+};
