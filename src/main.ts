@@ -1,7 +1,7 @@
-import { baseService } from './services/baseService';
+import { swapiService } from "./services/swapiService"
 
 (async () => {
-  const users = await baseService.getUsers();
+  const allPeople = await swapiService.getAllPeople()
 
-  console.log(users);
-})();
+  console.log(allPeople)
+})()
